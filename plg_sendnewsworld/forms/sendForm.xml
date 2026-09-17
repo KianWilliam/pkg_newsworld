@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<fields name="params">
+		<fieldset name="task_params">
+			<field
+		name="usergroup"
+		type="UserGroupList"
+		label="MOD_EXAMPLE_USERGROUP_LABEL"
+		description="MOD_EXAMPLE_USERGROUP_DESC"
+		layout="joomla.form.field.list-fancy-select"
+		checksuperusergroup="1"
+		default=""
+		multiple="1"
+		>
+		<option value="0">MOD_EXAMPLE_SELECT</option>
+	</field>
+			<field
+				name="email"
+				type="text"
+				label="PLG_TASK_SENDNEWSWORLD_EMAIL_LBL"
+				description="PLG_TASK_SENDNEWSWORLD_EMAIL_DESC"
+				default=""
+			/>
+			<field
+				name="language_override"
+				type="language"
+				label="PLG_TASK_SENDNEWSWORLD_LANGUAGE_OVERRIDE_LBL"
+				description="PLG_TASK_SENDNEWSWORLD_LANGUAGE_OVERRIDE_DESC"
+				default=""
+				client="administrator"
+				>
+				<option value="">PLG_TASK_SENDNEWSWORLD_LANGUAGE_OVERRIDE_NONE</option>
+			</field>
+		</fieldset>
+	</fields>
+</form>

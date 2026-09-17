@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="task" method="upgrade">
+	<name>plg_task_sendnewsworld</name>
+	<author>KWProductions121 Co.</author>
+	<creationDate>2026-08</creationDate>
+	<copyright>(C) 2025 KWProductions121 Co.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>webarchitect@kwproductions121.ir</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>5.0.0</version>
+	<description>PLG_TASK_SENDNEWSWORLD_XML_DESCRIPTION</description>
+	<namespace path="src">KWP121\Plugin\Task\SendNewsworld</namespace>
+	<files>
+		<folder>forms</folder>
+		<folder plugin="sendnewsworld">services</folder>
+		<folder>src</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB/plg_task_sendnewsworld.ini</language>
+		<language tag="en-GB">language/en-GB/plg_task_sendnewsworld.sys.ini</language>
+	</languages>
+	<config>
+				<fields name="params">
+
+		<fieldset name="basic"   addfieldprefix="Kwp121\Component\Newsworld\Administrator\Field" >
+
+		<field
+					name="newsworldid"
+					type="Newsnumber"
+					label="Select the particular Newsworld No. you would like to send.(Warning! It isn't the id of the Newsworld)"
+					size="10"
+			        multiple="false"
+			        
+				/>
+		</fieldset>
+				</fields>
+				
+	</config>
+</extension>
