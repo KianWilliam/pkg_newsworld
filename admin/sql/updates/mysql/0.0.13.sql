@@ -1,0 +1,1 @@
+ALTER TABLE `#__newsworld` ADD `params` VARCHAR(1024) NOT NULL DEFAULT '';

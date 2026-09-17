@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form> 
+	<config>
+		<inlinehelp button="show"/>
+	</config>
+	<field
+		name="title"
+		type="text"
+		label="COM_NEWSWORLD_NEWSWORLD_LABEL"
+		description="COM_NEWSWORLD__DESC"
+		size="40"
+		default=""
+		/>
+			<field
+		name="created_by"
+		type="text"
+		label="COM_NEWSWORLD_CREATED_LABEL"
+		description="COM_NEWSWORLD_CREATED_DESC"
+		size="40"
+		default=""
+		/>
+	<field 
+		name="alias" 
+		type="text" 
+		label="JFIELD_ALIAS_LABEL"
+		description="JFIELD_ALIAS_DESC"
+		hint="JFIELD_ALIAS_PLACEHOLDER"
+		size="40" 
+		/>
+			
+	<fieldset 
+                name="details"
+                label="COM_NEWSWORLD_NEWSWORLD_DETAILS"
+                addruleprefix="Kwp121\Component\Newsworld\Administrator\Rule"
+                addfieldprefix="Kwp121\Component\Newsworld\Administrator\Field">
+		<field
+				name="id"
+				type="hidden"
+				/>
+
+        <field
+				name="catid"
+				type="category"
+				extension="com_newsworld"
+				class="inputbox"
+				default=""
+				label="COM_NEWSWORLD_NEWSWORLD_FIELD_CATID_LABEL"
+				description="COM_NEWSWORLD_NEWSWORLD_FIELD_CATID_DESC"
+				required="true"
+		>
+			<option value="0">JOPTION_SELECT_CATEGORY</option>
+		</field>
+		
+       
+        <field
+				name="language" 
+				type="contentlanguage" 
+				label="JFIELD_LANGUAGE_LABEL"
+				description="COM_NEWSWORLD_NEWSWORLD_FIELD_LANGUAGE_DESC"
+				>
+				<option value="*">JALL</option>
+		</field>
+        <field 	name="published" 
+				type="list" 
+				label="JSTATUS"
+				description="JFIELD_PUBLISHED_DESC" 
+				class="form-select-color-state"
+				filter="intval" 	
+				size="1" 
+				default="1"
+		>
+			<option value="1">
+				JPUBLISHED</option>
+			<option value="0">
+				JUNPUBLISHED</option>
+		</field>
+		<field 
+				name="tags" 
+				type="tag"
+				label="JTAG" 
+				description="JGLOBAL_TYPE_OR_SELECT_SOME_TAGS"
+				multiple="true"
+		>
+		</field>
+        <field  
+				name="access" 
+				type="accesslevel" 
+				label="JFIELD_ACCESS_LABEL"
+				description="JFIELD_ACCESS_DESC"
+		>
+        </field>
+       
+		<field
+				name="newsworldordering"
+				type="newsworldordering"
+				label="JFIELD_ORDERING_LABEL"
+				description="JFIELD_ORDERING_DESC"
+				filter="int"
+				size="1">
+		</field>
+        <field 	name="version_note"
+				type="text"
+				label="JGLOBAL_FIELD_VERSION_NOTE_LABEL"
+				description="JGLOBAL_FIELD_VERSION_NOTE_DESC"
+				class="inputbox" 
+				size="45"
+				labelclass="control-label">
+		</field>
+    </fieldset>
+		<field 	name="description" 
+				type="editor"
+				label="COM_NEWSWORLD_NEWSWORLD_FIELD_DESCRIPTION_LABEL" 
+				description="COM_NEWSWORLD_NEWSWORLD_FIELD_DESCRIPTION_DESC" 
+						filter="\Joomla\CMS\Component\ComponentHelper::filterText"
+
+				buttons="true" 
+		/>
+   
+    <fields name="params">
+		<fieldset
+				name="params"
+				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
+		>
+			<field
+					name="show_category"
+					type="list"
+					label="COM_NEWSWORLD_NEWSWORLD_FIELD_SHOW_CATEGORY_LABEL"
+					description="COM_NEWSWORLD_NEWSWORLD_FIELD_SHOW_CATEGORY_DESC"
+					default=""
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+		</fieldset>
+	</fields>
+    <fieldset
+			name="accesscontrol"
+			label="COM_NEWSWORLD_FIELDSET_RULES"
+	>
+	
+	<field
+			name="rules"
+			type="rules"
+			label="JFIELD_RULES_LABEL"
+			translate_label="false"
+			filter="rules"
+			component="com_newsworld"
+			section="component"
+			validate="rules"
+		/>
+		
+		<field
+			name="schema"
+			type="hidden"
+		/>
+	
+    	<field
+				name="asset_id"
+				type="hidden"
+				filter="unset"
+				/>
+    	
+    </fieldset>
+</form>

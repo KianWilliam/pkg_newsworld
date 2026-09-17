@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" method="upgrade">
+
+    <name>News World</name>
+    <creationDate>July 2026</creationDate>
+    <author>Kian William</author>
+    <authorUrl>https://extensions.kwproductions121.ir</authorUrl>
+    <copyright>121KWP</copyright>
+    <license>GPL v3</license>
+    <version>1.0.0</version>
+    <description>
+        News World Component!
+    </description>
+
+  
+    <namespace path="src">Kwp121\Component\Newsworld</namespace>
+    
+	
+
+    <administration>
+        <!-- The link that will appear in the Admin panel's "Components" menu -->
+        <menu link="option=com_newsworld">COM_NEWSWORLD_MENU</menu>
+        <submenu>
+			<menu link="option=com_newsworld">COM_NEWSWORLD_MENU</menu>
+			<menu link="option=com_categories&amp;extension=com_newsworld">COM_NEWSWORLD_CATEGORIES</menu>
+            <menu link="option=com_fields&amp;view=fields&amp;context=com_newsworld.newsworld">Fields</menu>
+            <menu link="option=com_fields&amp;view=groups&amp;context=com_newsworld.newsworld">Fields Group</menu>
+		</submenu>
+
+        <!-- List of files and folders to copy, and where to copy them -->
+        <files folder="admin/">
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <folder>forms</folder>
+            <folder>layouts</folder>
+            <folder>services</folder>
+            <folder>sql</folder>
+            <folder>src</folder>
+            <folder>tmpl</folder>
+        </files>
+
+        <languages folder="admin">
+            <language tag="en-GB">language/en-GB/en-GB.com_newsworld.ini</language>
+            <language tag="en-GB">language/en-GB/en-GB.com_newsworld.sys.ini</language>          
+            <language tag="fr-FR">language/fr-FR/fr-FR.com_newsworld.ini</language>
+            <language tag="fr-FR">language/fr-FR/fr-FR.com_newsworld.sys.ini</language>
+        </languages>
+    </administration>
+    
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
+</extension>
