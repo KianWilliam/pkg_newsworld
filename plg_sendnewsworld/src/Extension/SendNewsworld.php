@@ -21,8 +21,6 @@ use Joomla\CMS\Factory;
 
 //use Joomla\CMS\Updater\Updater;
 use Joomla\CMS\Uri\Uri;
-//use Joomla\CMS\Version;
-//se Joomla\Component\Joomlaupdate\Administrator\Enum\AutoupdateRegisterState;
 use Joomla\Component\Scheduler\Administrator\Event\ExecuteTaskEvent;
 use Joomla\Component\Scheduler\Administrator\Task\Status;
 use Joomla\Component\Scheduler\Administrator\Traits\TaskPluginTrait;
@@ -32,9 +30,7 @@ use Joomla\Event\SubscriberInterface;
 use PHPMailer\PHPMailer\Exception as phpMailerException;
 use Joomla\CMS\User\UserHelper;
 
-// phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * A task plugin. Offers 2 task routines Invalidate Expired Consents and Remind Expired Consents
@@ -104,11 +100,7 @@ final class SendNewsworld extends CMSPlugin implements SubscriberInterface
      
         $eid = ExtensionHelper::getExtensionRecord('joomla', 'file')->extension_id;
 
-        
-       /* if (!$results) {
-            return Status::OK;
-        }*/
-		
+     
 
         $model = $this->getApplication()->bootComponent('com_newsworld')
             ->getMVCFactory()->createModel('Newsworlds', 'Administrator', ['ignore_request' => true]);
@@ -116,7 +108,6 @@ final class SendNewsworld extends CMSPlugin implements SubscriberInterface
         $model->setState('filter.extension_id', $eid);
 		
         $newsitems = $model->getItems();
-		//$num = count($news);
         if (empty($newsitems)) {
             return Status::OK;			
         }
@@ -126,15 +117,11 @@ final class SendNewsworld extends CMSPlugin implements SubscriberInterface
 				$news[] = $item;
 		endforeach;			
 
-//check if it is the last one and not already sent
 
-      // $newsworld = array_pop($news);
 		if(empty($chosen))
 		  $newsworld = end($news);
 		else
 			$newsworld = $news[--$chosen];
-		 // $newsworld = array_last($news);
-		//  $newsworld = $news[4];
 		
 		 $nw = $this->getApplication()->bootComponent('com_newsworld')
             ->getMVCFactory()->createModel('Newsworld', 'Administrator', ['ignore_request' => true]);
@@ -168,18 +155,9 @@ final class SendNewsworld extends CMSPlugin implements SubscriberInterface
 
 				}
 			}
-	//	$filteredusers = array_unique($filteredusers);
 		
 			
 			        $sitename = $this->getApplication()->get('sitename');
-//TAGS removed, htmlbody is only a title string. 
-
-		//	MailTemplate::createTemplate("com_newsworld.sendnews", "COM_NEWSWORLD_SEND_NEWS", "Real News", array('sitename', 'news'));
-		  
-		
-		  
-
-
 			
 			 $jLanguage = $this->getApplication()->getLanguage();
         $jLanguage->load('plg_task_newsworld', JPATH_ADMINISTRATOR, 'en-GB', true, true);
@@ -189,10 +167,7 @@ final class SendNewsworld extends CMSPlugin implements SubscriberInterface
             $jLanguage->load('plg_task_newsworld', JPATH_ADMINISTRATOR, $forcedLanguage, true, false);
         }
 		
-		//  $t = MailTemplate::getTemplate("com_newsworld.sendnews");
-		//  $t->htmlbody = $sendnews->description;
-          
-
+	
 
 		
 		  $baseURL  = Uri::base();
@@ -211,48 +186,20 @@ final class SendNewsworld extends CMSPlugin implements SubscriberInterface
 			
 			     
            try {
-              //  $mailer = new MailTemplate('com_newsworld.sendnews', $jLanguage->getTag());
                 $mailer->addRecipient($user->email);
 			   $mailer->setSubject("Real World News:".$newsworld->title);
 			   $mailer->isHtml(true);
               $mailer->Encoding = 'base64';
               $mailer->setBody($sendnews->description);
-			//   $mailer->addEmbeddedImage( 'https://worldwartoys.lordart121.ir/images/pottan.gif', 'pottan', 'pottan.png', 'base64', 'image/png' );
-            //   $mailer->addTemplateData($substitutions);			 
                 $mailer->send();
 				
             } 
 			catch ( MailDisabledException | phpMailerException $exception ) {
                 try {
-					//var_dump('hamid');
-					//exit();
-					
-				/*	if(!file_get_contents('https://worldwartoys.lordart121.ir/failedemails.txt'))
-					{
-						file_put_contents('https://worldwartoys.lordart121.ir/failedemails.txt', $user->id.'-'.$user->email.'\n');
-					}
-					else
-					{
-						$content = file_get_contents('https://worldwartoys.lordart121.ir/failedemails.txt');
-						$content .= $user->id.'-'.$user->email.'\n';
-						file_put_contents('https://worldwartoys.lordart121.ir/failedemails.txt', $content);
-					}*/
+				
                     $this->logTask($jLanguage->_($exception->getMessage()." userid:".$user->id." username:".$user->username. " email:".$user->email));
 				   
-				   // $t = microtime(true);
-					//$datetime  = date_create_from_format('Y-m-d H:i:s', $t);
-					//$query = $db->getQuery(true);
-
-					//$datetime = date("Y-m-d H:i:s");
-					//$columns = array('user_id', 'username', 'email', 'language', 'published', 'date');
-				//	$values = array( $user->id, $db->quote($user->username), $db->quote($user->email), $db->quote($jLanguage) ,$user->block, $datetime);
-					//$values = array( $user->id, $user->username, $user->email, $jLanguage ,$user->block, $datetime);
-				
-				//$query->insert($db->quoteName('#__emails'))->columns($db->quoteName($columns))->values(implode(',' ,$values));
-								//$query->insert($db->quoteName('#__emails'))->columns($columns)->values(implode(',' ,$values));
-
-					//$db->setQuery($query);
-					//$db->execute();
+				  
 
 					
                 } catch (\RuntimeException) {
@@ -264,7 +211,6 @@ final class SendNewsworld extends CMSPlugin implements SubscriberInterface
 			endforeach;
 			
 			
-			//MailTemplate::deleteTemplate("com_newsworld.sendnews");
 			
 
         $this->logTask($this->getApplication()->getLanguage()->_('PLG_TASK_SENDNEWSWORLD_SEND_END'), 'info'); 
