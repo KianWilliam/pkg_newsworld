@@ -12,12 +12,20 @@ use Joomla\Component\Categories\Administrator\Helper\CategoriesHelper;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Versioning\VersionableModelInterface;
+
 use Joomla\CMS\Versioning\VersionableModelTrait;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\UCM\UCMType;
+//use Joomla\CMS\Workflow\Workflow;
+//use Joomla\CMS\MVC\Model\WorkflowBehaviorTrait;
 
-class NewsworldModel extends AdminModel
+
+
+class NewsworldModel extends AdminModel implements VersionableModelInterface
 {
+	//    use WorkflowBehaviorTrait;
+
     use VersionableModelTrait;
     
     // JModelAdmin needs to know this for storing the associations 
@@ -41,49 +49,7 @@ class NewsworldModel extends AdminModel
 		return parent::batch($commands, $pks, $contexts);
 	}
 	
-	/**
-	 * Method implementing the batch setting of lat/long values
-	 */
-	protected function batchPosition($value, $pks, $contexts)
-	{
-		$app = Factory::getApplication();
-
-		if (isset($value['setposition']) && ($value['setposition'] === 'changePosition'))
-		{
-			if (empty($this->batchSet))
-			{
-				// Set some needed variables.
-				$this->user = $app->getIdentity();
-				$this->table = $this->getTable();
-				$this->tableClassName = get_class($this->table);
-				$this->contentType = new UCMType;
-				$this->type = $this->contentType->getTypeByTable($this->tableClassName);
-			}
-
-			foreach ($pks as $pk)
-			{
-				if ($this->user->authorise('core.edit', $contexts[$pk]))
-				{
-					$this->table->reset();
-					$this->table->load($pk);
-					
-					if (!$this->table->store())
-					{
-						$this->setError($this->table->getError());
-
-						return false;
-					}
-				}
-				else
-				{
-					$this->setError(Text::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_EDIT'));
-
-					return false;
-				}
-			}
-		}
-		return true;
-	}
+	
     /**
 	 * Method to override getItem to allow us to convert the JSON-encoded image information
 	 * in the database record into an array for subsequent prefilling of the edit form
@@ -260,6 +226,21 @@ class NewsworldModel extends AdminModel
 	 */
 	protected function prepareTable($table)
 	{
+		/*  if ($table->state == Workflow::CONDITION_PUBLISHED && (int) $table->publish_up == 0) {
+            $table->publish_up = Factory::getDate()->toSql();
+        }
+
+        if ($table->state == Workflow::CONDITION_PUBLISHED && \intval($table->publish_down) == 0) {
+            $table->publish_down = null;
+        }*/
+
+        // Increment the content version number.
+        $table->version = empty($table->version) ? 1 : $table->version + 1;
+
+        // Reorder the articles within the category so the new article is first
+        if (empty($table->id)) {
+            $table->reorder('catid = ' . (int) $table->catid . ' AND published >= 0');
+        }
 	}
     
     /**

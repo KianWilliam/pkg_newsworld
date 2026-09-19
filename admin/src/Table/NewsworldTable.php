@@ -97,7 +97,7 @@ class NewsworldTable extends Table implements VersionableTableInterface, Taggabl
 		$this->alias = trim($this->alias);
 		if (empty($this->alias))
 		{
-			$this->alias = $this->greeting;
+			$this->alias = $this->title;
 		}
 		$this->alias = OutputFilter::stringURLSafe($this->alias);
 		return true;

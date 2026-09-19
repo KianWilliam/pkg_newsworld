@@ -7,6 +7,8 @@ defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Associations;
+use Joomla\CMS\Component\ComponentHelper;
+
 
 class NewsworldsModel extends ListModel
 {
@@ -24,7 +26,9 @@ class NewsworldsModel extends ListModel
                 'access',
                 'association',
 				'published',
-				'params'
+				'version',
+				'params',
+				'ordering'
             );
 		}
 
@@ -33,7 +37,30 @@ class NewsworldsModel extends ListModel
     
     protected function populateState($ordering = null, $direction = null)
 	{
-		$app = Factory::getApplication();
+		//$app = Factory::getApplication();
+		
+			$app = Factory::getApplication('administrator');
+
+		// Load the filter state
+		$search = $app->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+		$this->setState('filter.search', $search);
+
+		$published = $app->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '', 'int');
+		$this->setState('filter.published', $published);
+
+		// List state information
+		$value = $app->input->get('limit', $app->get('list_limit', 20), 'uint');
+		$this->setState('list.limit', $value);
+
+		$value = $app->input->get('limitstart', 0, 'uint');
+		$this->setState('list.start', $value);
+
+		// Load the parameters
+		$params = ComponentHelper::getParams('com_newsworld');
+		$this->setState('params', $params);
+
+		// List state information
+		parent::populateState('a.title', 'asc');
 
 		// Adjust the context to support modal layouts.
 		if ($layout = $app->input->get('layout'))
@@ -72,7 +99,7 @@ class NewsworldsModel extends ListModel
 		// Create the base select statement.
         $query->select('a.id as id,  a.title as title, a.published as published, a.created as created, a.access as access,
             a.checked_out as checked_out, a.checked_out_time as checked_out_time, a.catid as catid,
-           a.alias as alias, a.language as language, a.params as params')
+           a.alias as alias, a.language as language,a.version as version, a.params as params, a.ordering as ordering')
 			->from($db->quoteName('#__newsworld', 'a'));
 
         // Join over the categories.
@@ -105,7 +132,7 @@ class NewsworldsModel extends ListModel
         // Join over the access levels, to get the name of the access level
         $query->select('v.title AS access_level')
                 ->join('LEFT', '#__viewlevels AS v ON v.id = a.access');
-            
+           
         // Filter: like / search
 		$search = $this->getState('filter.search');
 
@@ -150,13 +177,16 @@ class NewsworldsModel extends ListModel
         }
 
         // exclude root newsworld record
-        $query->where('a.id >= 1');
+        $query->where('a.id >= 1 ');
 
 		// Add the list ordering clause.
 		$orderCol	= $this->state->get('list.ordering', 'id');
 		$orderDirn 	= $this->state->get('list.direction', 'asc');
+	//	var_dump($orderCol);
 
 		$query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));
+		//var_dump($query);
+	//	exit();
 
 		return $query;
 	}

@@ -67,16 +67,13 @@ class NewsnumberField extends ListField
        	 $nw = Factory::getApplication()->bootComponent('com_newsworld')
             ->getMVCFactory()->createModel('Newsworlds', 'Administrator', ['ignore_request' => true]);
 			$news = $nw->getItems();	
-			//$newsnumber = count($news);
-	   
-        //HTMLHelper::_('select.multiple', "false");
-        // Closure to add a TaskOption as a <select> option in $options: array
+			
 		$options[0]=HTMLHelper::_('select.option', "select one of these:", '');
 		$j=1;
 			foreach($news as $i=>$n):
 			
 			if($n->published)          
-                $options[$j] = HTMLHelper::_('select.option', $i+1, $i+1);
+                $options[$j] = HTMLHelper::_('select.option', $i+1, $n->title);
 				$j++;
          
 			endforeach;

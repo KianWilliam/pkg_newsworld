@@ -18,11 +18,7 @@ $published = $this->state->get('filter.published');
 				<?php echo LayoutHelper::render('joomla.html.batch.item', array('extension' => 'com_newsworld')); ?>
 			</div>
         </div>
-        <div class="form-group col-md-6">
-			<div class="controls">
-				<?php echo LayoutHelper::render('newsworld.position', array()); ?>
-			</div>
-		</div>
+        
         
     </div>
     

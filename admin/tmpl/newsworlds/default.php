@@ -39,7 +39,7 @@ $authorFieldwidth = $assoc ? "10%" : "20%";
 <form action="index.php?option=com_newsworld&view=newsworlds" method="post" id="adminForm" name="adminForm">
     <div class="row-fluid">
             <div class="span10">
-                <?php echo Text::_('COM_NEWSWORLD_NEWSWORLDS_FILTER'); ?>
+               <strong> <?php echo Text::_('COM_NEWSWORLD_NEWSWORLDS_FILTER'); ?> :</strong>
                 <?php
                     echo LayoutHelper::render(
                         'joomla.searchtools.default',

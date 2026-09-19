@@ -10,12 +10,19 @@
     <version>1.0.0</version>
     <description>
         News World Component!
-    </description>
-
-  
-    <namespace path="src">Kwp121\Component\Newsworld</namespace>
-    
-	
+    </description>  
+    <namespace path="src">Kwp121\Component\Newsworld</namespace>    
+	 <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+   
 
     <administration>
         <!-- The link that will appear in the Admin panel's "Components" menu -->
@@ -47,20 +54,6 @@
         </languages>
     </administration>
     
-    <install>
-        <sql>
-            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
-        </sql>
-    </install>
-    <uninstall>
-        <sql>
-            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
-        </sql>
-    </uninstall>
-    <update>
-        <schemas>
-            <schemapath type="mysql">sql/updates/mysql</schemapath>
-        </schemas>
-    </update>
+   
 
 </extension>

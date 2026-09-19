@@ -6,18 +6,18 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die('Restricted Access');
-/*
-$this->document->getWebAssetManager()
-    ->useScript('com_newsworld.validate-greeting')
-    ->useScript('com_newsworld.fix-permissions-ajax-call');
-	
-	*/
+
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_contenthistory');
+
 $wa->useScript('keepalive')
-    ->useScript('form.validate');
+    ->useScript('form.validate')
+	    ->useScript('com_contenthistory.admin-history-versions');
+;
 
 $this->useCoreUI = true;
     

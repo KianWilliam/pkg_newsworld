@@ -91,13 +91,21 @@
         </field>
        
 		<field
-				name="newsworldordering"
-				type="newsworldordering"
+				name="ordering"
+				type="text"
 				label="JFIELD_ORDERING_LABEL"
 				description="JFIELD_ORDERING_DESC"
-				filter="int"
-				size="1">
+				default="0"
+				>
 		</field>
+		<field
+			name="version"
+			type="text"
+			label="COM_NEWSWORLD_FIELD_VERSION_LABEL"
+			class="readonly"
+			readonly="true"
+			filter="unset"
+		/>
         <field 	name="version_note"
 				type="text"
 				label="JGLOBAL_FIELD_VERSION_NOTE_LABEL"
@@ -162,4 +170,18 @@
 				/>
     	
     </fieldset>
+	<fields>
+		<field
+			name="introtext"
+			label="COM_NEWSWORLD_FIELD_INTROTEXT"
+			filter="\Joomla\CMS\Component\ComponentHelper::filterText"
+		/>
+
+		<field
+			name="fulltext"
+			label="COM_NEWSWORLD_FIELD_FULLTEXT"
+			filter="\Joomla\CMS\Component\ComponentHelper::filterText"
+		/>
+	</fields>
+
 </form>
